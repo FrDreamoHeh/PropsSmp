@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Props Node Host</title>
+<style>
+  :root { font-family: Inter, Segoe UI, Arial; margin: 0; padding: 0; }
+  body {
+    background: url("https://cdn.discordapp.com/attachments/1430506426639585300/1433028702580506775/Good_Morning_Hello_GIF_by_Minecraft.gif?ex=6903337b&is=6901e1fb&hm=cae56b0d4b193e9d9111534ea14e51a15eacbda59143745fcc40c5fe49dfdf05&") center/cover no-repeat fixed;
+    color: #e6eef8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+  .container { width: 100%; max-width: 1000px; text-align: center; }
+  .nav { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 20px; flex-wrap: wrap; }
+  .btn {
+    background: #06b6d4; border: none; padding: 10px 16px; border-radius: 10px;
+    cursor: pointer; font-weight: 600; box-shadow: 0 0 15px #06b6d4; transition: 0.3s;
+  }
+  .btn:hover { box-shadow: 0 0 25px #22d3ee; transform: scale(1.05); }
+  #mainContent {
+    background: rgba(5, 15, 30, 0.9); padding: 30px; border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,200,255,0.3);
+  }
+  h1 { margin: 0 0 10px; text-shadow: 0 0 10px #00eaff; }
+  p { opacity: 0.9; }
+  .popup {
+    position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8);
+    display: none; align-items: center; justify-content: center; z-index: 50;
+  }
+  .popup-content {
+    background: #021426; padding: 20px; border-radius: 12px;
+    min-width: 300px; box-shadow: 0 0 30px #0284c7;
+  }
+  .popup-content input {
+    display: block; width: 100%; margin: 8px 0; padding: 10px;
+    border-radius: 8px; border: 1px solid #0ea5e9; background: #06202a; color: #e6eef8;
+  }
+  .close-btn, .back-btn {
+    margin-top: 8px; background: #334155; padding: 6px 8px; border-radius: 6px;
+    color: #fff; border: none; cursor: pointer; transition: 0.2s;
+  }
+  .close-btn:hover, .back-btn:hover { background: #475569; transform: scale(1.05); }
+  .text-red-400 { color: #fb7185; }
+  .text-green-400 { color: #34d399; }
+  .glow { text-shadow: 0 0 8px rgba(34,211,238,0.35); }
+  .tab-content {
+    display: none; background: rgba(4, 10, 20, 0.9); padding: 25px;
+    border-radius: 15px; margin-top: 20px; position: relative;
+  }
+  .plan {
+    background: #0b1c2d; padding: 15px; margin: 10px;
+    border-radius: 10px; box-shadow: 0 0 10px rgba(0,255,255,0.2);
+  }
+  .plan h3 { color: #22d3ee; }
+  .discord-invite {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 18px; background: rgba(88,101,242,0.2); border-radius: 10px;
+    text-decoration: none; color: #e6eef8; font-weight: 600;
+    transition: 0.3s; box-shadow: 0 0 15px #5865F2;
+  }
+  .discord-invite:hover { background: #5865F2; transform: scale(1.08); color: white; }
+  .discord-logo { height: 35px; filter: drop-shadow(0 0 8px #5865F2); }
+  .workers-grid {
+    display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 20px; margin-top: 20px;
+  }
+  .worker {
+    background: #071a2d; padding: 15px; border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,255,255,0.2); transition: 0.3s;
+  }
+  .worker:hover { transform: scale(1.05); box-shadow: 0 0 20px #22d3ee; }
+  .worker img {
+    width: 100px; height: 100px; border-radius: 50%;
+    object-fit: cover; box-shadow: 0 0 15px #22d3ee; margin-bottom: 10px;
+  }
+  .worker h3 { margin: 0; color: #22d3ee; }
+  .worker p { margin: 4px 0 0; font-size: 14px; opacity: 0.8; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav" id="nav"></div>
+
+  <div id="mainContent" style="display:none;">
+    <h1>Welcome to Props Node Host</h1>
+    <p>Your trusted Minecraft server hosting — stable, optimized & powerful nodes for all creators.</p>
+    <div style="margin-top:10px;">
+      <button class="btn" id="openShop">Shop</button>
+      <button class="btn" id="openWorkers">Our Workers</button>
+    </div>
+
+    <div id="shopPage" class="tab-content">
+      <h2 class="glow">💎 Our Hosting Plans</h2>
+      <div class="plan"><h3>100₹ — 4GB Server</h3><p>Perfect for small SMPs and survival servers.</p></div>
+      <div class="plan"><h3>300₹ — 7GB Server</h3><p>For medium-sized servers with more plugins.</p></div>
+      <div class="plan"><h3>500₹ — 10GB Server</h3><p>Powerful plan for modded or creative servers.</p></div>
+      <div class="plan" style="border:2px solid #22d3ee;">
+        <h3>800₹ — 15GB Premium Server 🚀</h3>
+        <p>Includes <b>Custom Plugins + Minecraft Developer Support</b></p>
+      </div>
+      <img src="https://cdn.discordapp.com/attachments/1427615744656412754/1432763699491508344/InShot_20251024_145436071.jpg?ex=6902e56d&is=690193ed&hm=5959fd903300f360ae8f26ffa95f90445e89cd416c0d7e1943d88f8e6538e4ce&"
+           alt="QR Code" width="160" style="margin-top:10px;border-radius:10px;box-shadow:0 0 15px #22d3ee;">
+      <p style="margin-top:10px;">After payment, make a ticket in our Discord Server 💬</p>
+      <button class="back-btn" id="backFromShop">← Back</button>
+    </div>
+
+    <div id="workersPage" class="tab-content">
+      <h2 class="glow">👥 Our Workers</h2>
+      <div class="workers-grid">
+        <div class="worker">
+          <img src="https://cdn.discordapp.com/attachments/1430506426639585300/1433036932107210772/image.png" alt="">
+          <h3>Sovel_rick</h3><p>Founder</p>
+        </div>
+        <div class="worker">
+          <img src="https://cdn.discordapp.com/attachments/1430506426639585300/1433038520846520410/Screenshot_2025-10-29_155235.png" alt="">
+          <h3>NotSkyOG</h3><p>Co-Founder</p>
+        </div>
+        <div class="worker">
+          <img src="https://cdn.discordapp.com/attachments/1430506426639585300/1433037142745022514/Screenshot_2025-02-20_212511.png" alt="">
+          <h3>FrDreamoHeh</h3><p>Minecraft Developer / Web Developer</p>
+        </div>
+        <div class="worker">
+          <img src="https://cdn.discordapp.com/attachments/1430506426639585300/1433038049079722085/Screenshot_2025-10-29_155003.png" alt="">
+          <h3>DarkWolf</h3><p>Minecraft Developer</p>
+        </div>
+        <div class="worker">
+          <img src="https://tse2.mm.bing.net/th/id/OIP.DeUuWk5r_v2VX61foEQOxwAAAA?w=128&h=128&rs=1&pid=ImgDetMain&o=7&rm=3" alt="">
+          <h3>Not_Tanish</h3><p>Texture Pack Handler</p>
+        </div>
+      </div>
+      <button class="back-btn" id="backFromWorkers">← Back</button>
+    </div>
+
+    <a href="https://discord.gg/RUeaAYufXg" class="discord-invite" target="_blank">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz14G3flOHK0TPQ7Tw_qsrJNS2mKsahX0K1g&s" alt="Discord Logo" class="discord-logo">
+      Join Our Discord Server
+    </a>
+  </div>
+</div>
+
+<!-- Login Popup -->
+<div class="popup" id="loginPopup">
+  <div class="popup-content">
+    <h2 class="glow">Login</h2>
+    <input type="text" id="loginEmail" placeholder="Gmail">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button class="btn" id="loginBtn">Login</button>
+    <p id="loginMsg" class="text-red-400"></p>
+    <button class="close-btn" onclick="closePopup('loginPopup')">Close</button>
+  </div>
+</div>
+
+<!-- Register Popup -->
+<div class="popup" id="registerPopup">
+  <div class="popup-content">
+    <h2 class="glow">Register</h2>
+    <input type="text" id="regEmail" placeholder="Gmail">
+    <input type="password" id="regPass" placeholder="Password">
+    <input type="text" id="regDiscord" placeholder="Discord Name (optional)">
+    <input type="text" id="regFirst" placeholder="First Name">
+    <input type="text" id="regLast" placeholder="Last Name">
+    <button class="btn" id="registerBtn">Register</button>
+    <p id="registerMsg" class="text-green-400"></p>
+    <button class="close-btn" onclick="closePopup('registerPopup')">Close</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const nav=document.getElementById('nav'),
+        mainContent=document.getElementById('mainContent'),
+        shopPage=document.getElementById('shopPage'),
+        workersPage=document.getElementById('workersPage');
+
+  const USERS_KEY="users",LOGGED_KEY="loggedIn";
+  function getUsers(){try{return JSON.parse(localStorage.getItem(USERS_KEY))||{}}catch{return{}}}
+  function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u))}
+  function getLogged(){return localStorage.getItem(LOGGED_KEY)}
+  function setLogged(e){localStorage.setItem(LOGGED_KEY,e)}
+  function clearLogged(){localStorage.removeItem(LOGGED_KEY)}
+  window.closePopup=id=>document.getElementById(id).style.display="none";
+  function openPopup(id){document.getElementById(id).style.display="flex"}
+
+  function renderUI(){
+    const users=getUsers(),logged=getLogged();
+    if(logged&&users[logged]){
+      nav.innerHTML=`<button class="btn" id="logoutBtn">Logout</button>`;
+      mainContent.style.display="block";
+      document.getElementById('logoutBtn').addEventListener('click',logout);
+    }else{
+      nav.innerHTML=`<button class="btn" id="openLogin">Login</button><button class="btn" id="openRegister">Register</button>`;
+      mainContent.style.display="none";
+      document.getElementById('openLogin').addEventListener('click',()=>openPopup('loginPopup'));
+      document.getElementById('openRegister').addEventListener('click',()=>openPopup('registerPopup'));
+    }
+  }
+
+  function register(){
+    const email=regEmail.value.trim().toLowerCase(),pass=regPass.value.trim(),discord=regDiscord.value.trim(),first=regFirst.value.trim(),last=regLast.value.trim();
+    if(!email||!pass||!first||!last){registerMsg.textContent="Please fill all required fields!";return;}
+    const users=getUsers();
+    if(users[email]){registerMsg.textContent="Account already exists!";return;}
+    users[email]={pass,discord,first,last,created:Date.now()};
+    saveUsers(users);
+    registerMsg.textContent="✅ Account Created! You can now login.";
+    regEmail.value=regPass.value=regDiscord.value=regFirst.value=regLast.value="";
+  }
+
+  function login(){
+    const email=loginEmail.value.trim().toLowerCase(),pass=loginPass.value.trim(),users=getUsers();
+    if(!email||!pass){loginMsg.textContent="Please enter email and password.";return;}
+    if(!users[email]){loginMsg.textContent="No account found. Please register.";return;}
+    if(users[email].pass!==pass){loginMsg.textContent="❌ Incorrect password. Please try again.";return;}
+    setLogged(email);closePopup('loginPopup');alert("Welcome "+(users[email].first||"User")+"!");renderUI();
+  }
+
+  function logout(){clearLogged();renderUI();}
+  document.getElementById('loginBtn').onclick=login;
+  document.getElementById('registerBtn').onclick=register;
+
+  document.getElementById('openShop').onclick=()=>toggleTab(shopPage);
+  document.getElementById('openWorkers').onclick=()=>toggleTab(workersPage);
+  document.getElementById('backFromShop').onclick=()=>toggleTab();
+  document.getElementById('backFromWorkers').onclick=()=>toggleTab();
+
+  function toggleTab(tab){
+    [shopPage,workersPage].forEach(t=>t.style.display='none');
+    if(tab) tab.style.display='block';
+  }
+
+  renderUI();
+})();
+</script>
+</body>
+</html>
